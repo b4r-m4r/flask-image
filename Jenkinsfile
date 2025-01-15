@@ -16,7 +16,6 @@ pipeline {
             """
         }
     }
-    }
 
     stages {
         stage('Build') {
@@ -32,7 +31,7 @@ pipeline {
         //     steps {
         //         echo 'Deploying....'
         //         sh "docker.Image.push(${dockerTag})"
-
         //     }
         // }
     }
+}
