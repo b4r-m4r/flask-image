@@ -1,8 +1,8 @@
 pipeline {
     environment {
-        registry = "minipuppeteer/testing"
+        dockerImage = "minipuppeteer/testing"
+        dockerTag = "latest"
         registryCredential = 'dh_id'
-        dockerImage = ''
     }
     agent any
 
@@ -10,21 +10,25 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                script {
-                dockerImage = docker.build registry + ':latest'
-                }
-                // sh 'docker build -t docker-flask .'
+                sh 'docker build -t ${dockerImage}:${dockerTag} .' 
             }
         }
+
+        stage('Login') {
+            steps {
+                echo 'Logging in..'
+                withCredentials([usernamePassword(credentialsId: DOCKERHUB_CREDENTIALS, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    sh """
+                        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+                    """
+                }
+            }
+        }
+
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                script {
-                docker.WithReigstry('', registryCredential) {
-                    dockerImage.push()
-                }
-                }
-                // sh 'docker push '
+                sh 'docker push ${dockerImage}:${dockerTag}'
 
             }
         }
