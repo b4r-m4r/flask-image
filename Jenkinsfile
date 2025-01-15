@@ -4,11 +4,7 @@ pipeline {
         dockerTag = "latest"
         registryCredential = 'dh_id'
     }
-    agent {
-        docker {
-            image 'docker:latest'
-        }
-    }
+    agent dockerContainer
 
     stages {
         stage('Build') {
