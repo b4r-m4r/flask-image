@@ -10,7 +10,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                batchFile 'docker build -t ${dockerImage}:${dockerTag} .' 
+                batchFile "docker build -t ${dockerImage}:${dockerTag} ."
             }
         }
 
@@ -28,7 +28,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                batchFile 'docker push ${dockerImage}:${dockerTag}'
+                batchFile "docker push ${dockerImage}:${dockerTag}"
 
             }
         }
