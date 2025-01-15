@@ -10,16 +10,16 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                sh "docker.build(${dockerImage}:${dockerTag})"
+                sh docker.build("${dockerImage}:${dockerTag}")
             }
         }
 
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-                sh "docker.Image.push(${dockerTag})"
+        // stage('Deploy') {
+        //     steps {
+        //         echo 'Deploying....'
+        //         sh "docker.Image.push(${dockerTag})"
 
-            }
-        }
+        //     }
+        // }
     }
 }
