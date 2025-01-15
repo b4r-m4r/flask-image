@@ -6,7 +6,17 @@ pipeline {
     }
     agent {
         kubernetes {
-            containerTemplate(name: 'docker', image: 'docker:dind')
+            podTemplate(
+                agentContainer: 'docker',
+                agentInjection: true,
+                yaml: '''
+                    apiVersion: v1
+                    kind: Pod
+                    spec:
+                    containers:
+                    - name: docker
+                        image: docker:dind
+                ''')
         }
     }
 
