@@ -4,7 +4,11 @@ pipeline {
         dockerTag = "latest"
         registryCredential = 'dh_id'
     }
-    agent any
+    agent {
+        kubernetes {
+            image 'docker:dind'
+        }
+    }
 
     stages {
         stage('Build') {
