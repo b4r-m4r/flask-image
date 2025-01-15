@@ -4,35 +4,20 @@ pipeline {
         dockerTag = "latest"
         registryCredential = 'dh_id'
     }
-    agent {
-        dockerContainer {
-            image 'docker:dind'
-        }
-    }
+    agent any
 
     stages {
         stage('Build') {
             steps {
                 echo 'Building..'
-                sh "docker build -t ${dockerImage}:${dockerTag} ."
-            }
-        }
-
-        stage('Login') {
-            steps {
-                echo 'Logging in..'
-                withCredentials([usernamePassword(credentialsId: registryCredential, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh """
-                        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-                    """
-                }
+                sh "docker.build(${dockerImage}:${dockerTag})"
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                sh "docker push ${dockerImage}:${dockerTag}"
+                sh "docker.Image.push(${dockerTag})"
 
             }
         }
