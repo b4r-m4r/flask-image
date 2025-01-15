@@ -28,7 +28,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                batchFile 'docker pubatchFile ${dockerImage}:${dockerTag}'
+                batchFile 'docker push ${dockerImage}:${dockerTag}'
 
             }
         }
