@@ -10,7 +10,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                sh "docker build -t ${dockerImage}:${dockerTag} ."
+                powershell "docker build -t ${dockerImage}:${dockerTag} ."
             }
         }
 
@@ -18,7 +18,7 @@ pipeline {
             steps {
                 echo 'Logging in..'
                 withCredentials([usernamePassword(credentialsId: registryCredential, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh """
+                    powershell """
                         echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
                     """
                 }
@@ -28,7 +28,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                sh "docker push ${dockerImage}:${dockerTag}"
+                powershell "docker pupowershell ${dockerImage}:${dockerTag}"
 
             }
         }
