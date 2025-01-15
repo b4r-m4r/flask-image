@@ -11,8 +11,19 @@ pipeline {
             kind: Pod
             spec:
               containers:
-              - name: docker
-                image: docker:20.10.24
+              - name: kaniko
+                image: gcr.io/kaniko-project/executor:latest
+                args:
+                - "--dockerfile=/workspace/Dockerfile"
+                - "--context=/workspace"
+                - "--destination=${dockerImage}:${dockerTag}"
+                volumeMounts:
+                - name: docker-config
+                  mountPath: /kaniko/.docker
+              volumes:
+              - name: docker-config
+                secret:
+                  secretName: docker-registry-secret
             """
         }
     }
@@ -20,9 +31,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                container('docker') {
-                    echo 'Building..'
-                    sh docker.build("${dockerImage}:${dockerTag}")
+                container('kaniko') {
+                    echo 'Building with Kaniko...'
+                    sh "/kaniko/executor --context=/workspace --dockerfile=/workspace/Dockerfile --destination=${dockerImage}:${dockerTag}"
                 }
             }
         }
