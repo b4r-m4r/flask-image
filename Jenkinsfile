@@ -6,25 +6,25 @@ pipeline {
     }
     agent {
         kubernetes {
-            podTemplate(
-                agentContainer: 'docker',
-                agentInjection: true,
-                yaml: '''
-                    apiVersion: v1
-                    kind: Pod
-                    spec:
-                    containers:
-                    - name: docker
-                        image: docker:dind
-                ''')
+            yaml """
+            apiVersion: v1
+            kind: Pod
+            spec:
+              containers:
+              - name: docker
+                image: docker:20.10.24
+            """
         }
+    }
     }
 
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
-                sh docker.build("${dockerImage}:${dockerTag}")
+                container('docker') {
+                    echo 'Building..'
+                    sh docker.build("${dockerImage}:${dockerTag}")
+                }
             }
         }
 
