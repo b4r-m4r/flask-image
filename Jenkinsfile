@@ -6,7 +6,7 @@ pipeline {
     }
     agent {
         dockerContainer {
-            image 'docker:latest'
+            image 'docker:dind'
         }
     }
 
