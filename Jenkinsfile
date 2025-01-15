@@ -6,7 +6,7 @@ pipeline {
     }
     agent {
         kubernetes {
-            image 'docker:dind'
+            containerTemplate(name: 'docker', image: 'docker:dind')
         }
     }
 
