@@ -31,6 +31,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                checkout scm
                 container('kaniko') {
                     echo 'Building with Kaniko...'
                     sh "/kaniko/executor --context=/workspace --dockerfile=/workspace/Dockerfile --destination=${env.dockerImage}:${env.dockerTag}"
