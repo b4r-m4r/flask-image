@@ -13,7 +13,8 @@ pipeline {
               containers:
               - name: kaniko
                 image: gcr.io/kaniko-project/executor:latest
-                
+                args:
+                - "--destination=${env.dockerImage}:${env.dockerTag}"
                 volumeMounts:
                 - name: docker-config
                   mountPath: /kaniko/.docker
