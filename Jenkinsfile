@@ -18,14 +18,14 @@ pipeline {
         stage('Build') {
             steps {
                     echo 'Building with local docker daemon...'
-                    sh "docker -H ${dockerHost} build -t ${env.dockerImage}:${env.dockerTag} ."
+                    sh "docker -H ${dockerHost} build -t ${dockerImage}:${dockerTag} ."
                 }
             }
 
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                sh "docker -H ${dockerHost} push ${env.dockerImage}:${env.dockerTag}"
+                sh "docker -H ${dockerHost} push ${dockerImage}:${dockerTag}"
             }
         }
     }
