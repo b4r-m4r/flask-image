@@ -12,7 +12,7 @@ pipeline {
             }
             steps {
                 echo 'Logging into Docker Hub'
-                echo "${$DOCKER_CRDS_PSW}"
+                echo "${DOCKER_CRDS_PSW}"
                 powershell('echo $DOCKER_CRDS_PSW | docker login -u $DOCKER_CRDS_USR --password-stdin')
                 
             }
