@@ -2,7 +2,6 @@ pipeline {
     environment {
         dockerImage = "minipuppeteer/testing"
         dockerTag = "latest"
-        registryCredential = 'dh_id'
     }
     agent any
 
@@ -10,7 +9,7 @@ pipeline {
         stage('Login') {
             steps {
                 echo 'Logging into Docker Hub'
-                withCredentials([usernamePassword(credentialsId: $registryCredential,
+                withCredentials([usernamePassword(credentialsId: 'dh_id',
                 usernameVariable: 'dockerUser', passwordVariable: 'dockerPass')]) 
                 {
                     powershell "echo $dockerPass | docker login -u $dockerUser --password-stdin"
