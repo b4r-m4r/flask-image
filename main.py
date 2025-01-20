@@ -1,8 +1,12 @@
 from flask import Flask, render_template_string
+from werkzeug.middleware.proxy_fix import ProxyFix
+
 import docker
 
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_host=1)
 docker_client = docker.from_env()
+
 
 html_template = """
 <!DOCTYPE html>
