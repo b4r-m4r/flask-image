@@ -2,6 +2,7 @@ pipeline {
     environment {
         dockerImage = "minipuppeteer/testing"
         dockerTag = "latest"
+        dockerHost = "127.0.0.1"
     }
     agent any
 
@@ -17,14 +18,14 @@ pipeline {
         stage('Build') {
             steps {
                     echo 'Building with local docker daemon...'
-                    sh "docker build -t ${env.dockerImage}:${env.dockerTag} ."
+                    sh "docker -H ${dockerHost} build -t ${env.dockerImage}:${env.dockerTag} ."
                 }
             }
 
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-                sh "docker push ${env.dockerImage}:${env.dockerTag}"
+                sh "docker -H ${dockerHost} push ${env.dockerImage}:${env.dockerTag}"
             }
         }
     }
