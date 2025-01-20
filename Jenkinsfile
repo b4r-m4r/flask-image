@@ -10,9 +10,9 @@ pipeline {
             steps {
                 echo 'Logging into Docker Hub'
                 withCredentials([usernamePassword(credentialsId: 'dh_id',
-                usernameVariable: 'dockerUser', passwordVariable: 'dockerPass')]) 
+                usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) 
                 {
-                    powershell 'echo $dockerPass | docker login -u $dockerUser --password-stdin'
+                    powershell 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin'
                 }
             }
         }
