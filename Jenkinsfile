@@ -20,7 +20,6 @@ pipeline {
                     sh "docker build -t ${env.dockerImage}:${env.dockerTag} ."
                 }
             }
-        }
 
         stage('Deploy') {
             steps {
@@ -29,3 +28,4 @@ pipeline {
             }
         }
     }
+}
