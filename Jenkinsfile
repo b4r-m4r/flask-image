@@ -12,7 +12,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dh_id',
                 usernameVariable: 'dockerUser', passwordVariable: 'dockerPass')]) 
                 {
-                    powershell "echo $dockerPass | docker login -u $dockerUser --password-stdin"
+                    powershell 'echo $dockerPass | docker login -u $dockerUser --password-stdin'
                 }
             }
         }
