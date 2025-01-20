@@ -10,7 +10,7 @@ pipeline {
         stage('Build') {
             steps {
                     echo 'Building with local docker daemon...'
-                    powershell "docker build -t ${env.dockerImage}:${env.dockerTag}"
+                    powershell "docker build -t ${env.dockerImage}:${env.dockerTag} ."
                 }
             }
         }
