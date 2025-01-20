@@ -7,13 +7,24 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Login') {
             steps {
-                    echo 'Building with local docker daemon...'
-                    powershell "docker build -t ${env.dockerImage}:${env.dockerTag} ."
+                echo 'Logging into Docker Hub'
+                withCredentials([usernamePassword(credentialsId: $registryCredential,
+                usernameVariable: 'dockerUser', passwordVariable: 'dockerPass')]) 
+                {
+                    powershell "echo $dockerPass | docker login -u $dockerUser --password-stdin"
                 }
             }
         }
+
+        // stage('Build') {
+        //     steps {
+        //             echo 'Building with local docker daemon...'
+        //             powershell "docker build -t ${env.dockerImage}:${env.dockerTag} ."
+        //         }
+        //     }
+        // }
 
         // stage('Deploy') {
         //     steps {
