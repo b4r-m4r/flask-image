@@ -12,7 +12,8 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dh_id',
                 usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) 
                 {
-                    powershell 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin'
+                    powershell 'echo $DOCKER_PASSWORD $DOCKER_USER'
+                    // powershell 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin'
                 }
             }
         }
