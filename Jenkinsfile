@@ -13,7 +13,7 @@ pipeline {
             steps {
                 sh('echo $DOCKER_CRDS_PSW | docker login -u $DOCKER_CRDS_USR --password-stdin')
             }
-
+        }
         stage('Build') {
             steps {
                     echo 'Building with local docker daemon...'
@@ -21,7 +21,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
@@ -29,4 +29,3 @@ pipeline {
             }
         }
     }
-}
