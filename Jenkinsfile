@@ -10,9 +10,8 @@ pipeline {
         stage('Login') {
             steps {
                 echo 'Logging into Docker Hub'
-                {
-                    powershell 'echo $DOCKER_CRDS_PSW | docker login -u $DOCKER_CRDS_USR --password-stdin'
-                }
+                powershell 'echo $DOCKER_CRDS_PSW | docker login -u $DOCKER_CRDS_USR --password-stdin'
+                
             }
         }
 
@@ -31,4 +30,4 @@ pipeline {
         //     }
         // }
     }
-}
+
