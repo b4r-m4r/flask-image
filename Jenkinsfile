@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        dockerImage = "minipuppeteer/testing"
+        dockerImage = "minipuppeteer/flask"
         dockerTag = "latest"
         dockerHost = "127.0.0.1"
     }
