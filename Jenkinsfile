@@ -2,6 +2,7 @@ pipeline {
     environment {
         dockerImage = "minipuppeteer/testing"
         dockerTag = "latest"
+        DOCKER_CRDS = credentials('dh_id')
     }
     agent any
 
@@ -9,11 +10,8 @@ pipeline {
         stage('Login') {
             steps {
                 echo 'Logging into Docker Hub'
-                withCredentials([usernamePassword(credentialsId: 'dh_id',
-                usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASSWORD')]) 
                 {
-                    powershell "echo ${DOCKER_USER} > c:\\temp\\tetet.txt"
-                    // powershell 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin'
+                    powershell 'echo $DOCKER_CRDS_PSW | docker login -u $DOCKER_CRDS_USR --password-stdin'
                 }
             }
         }
