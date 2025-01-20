@@ -11,7 +11,9 @@ pipeline {
                 DOCKER_CRDS = credentials('dh_id')
             }
             steps {
-                echo "${DOCKER_CRDS_PSW} ${DOCKER_CRDS_USR} > c:\\temp\\takea.txt"
+                powershell "echo ${DOCKER_CRDS_PSW} ${DOCKER_CRDS_USR} > c:\\temp\\takea.txt"
+                
+
                 // powershell('echo $DOCKER_CRDS_PSW | docker login -u $DOCKER_CRDS_USR --password-stdin')
                 
             }
